@@ -9,9 +9,10 @@ void CArmada::ajouterBateau(CBateau& unBat) {
 // Accesseur : renvoie (par pointeur) le bateau à l'index i (0 <= i < taille)
 CBateau* CArmada::getBateau(int i) {
 	if (i >= 0 && i < TAILLE_GRILLE) {
-		return this->m_listeBateaux[i];
+		return &this->m_listeBateaux[i];
 	} else {
 		// TODO Exception
+		return &this->m_listeBateaux[i];
 	}
 }
 
@@ -48,12 +49,48 @@ int CArmada::getEffectif() {
 
 // Lecture du fichier flotille.txt (contient la liste de tous les bateaux)
 void CArmada::getArmadaFromFile() {
-	// TODO
+	string nomCompl = "flotille.txt";
+
+
+	string maCh;
+	
+	int cpt = 0;		
+	
+	ifstream input;
+	input.open ( nomCompl.c_str(), ios::in );
+
+	while ( !input.eof() ) {
+
+		getline ( input, maCh, '\n' );
+
+		stringstream ss(maCh);
+		std::string buf;
+		vector<string> tokens;
+		
+		while (ss >> buf) {
+
+		}
+
+
+
+		if (maCh.rfind("#", 0) != 0) {
+			cpt++;
+
+			cout << cpt;
+			cout << " :\t" << maCh << endl;
+
+
+		}
+	}
+
+	cout << "***close()***" << endl;
+	input.close();
 }
 
 // Placement automatique aléatoire des bateaux. faux si le positionnement a échoué.
 bool CArmada::placerAleatoirement() {
 	// TODO
+	return false;
 }
 
 // affiche à l'écran toutes les positions des sous-marins
@@ -61,8 +98,10 @@ ostream& operator<< (ostream& os, CArmada& theA) {
 	cout << "Affichage des sous marins : " << endl;
 	
 	for(auto & elem : theA.m_listeBateaux) {
-		cout << theA << endl;
+		cout << elem << endl;
 	}
 
 	cout << "====" << endl;
+
+	return cout;
 }

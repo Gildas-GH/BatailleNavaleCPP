@@ -9,7 +9,7 @@
 
 # Déclaration de quelques variables utiles au makefile
 GPP = g++ -Wall
-SRC = ../src
+SRC = ../src2
 BIN = ../bin
 
 # La cible "deleteAll" est exécutée en tapant la commande "make deleteAll"
@@ -39,7 +39,49 @@ compilTestCBateau :
 	@echo Compilation testCBateau
 	$(GPP) $(SRC)/testCBateau.cpp $(BIN)/CBateau.o -o $(BIN)/testCBateau.bin
 
-# A VOUS D'ECRIRE LA SUITE...
+# ---
+
+testCArmada : deleteAll compilCBateau compilCArmada compilTestCArmada
+
+compilCArmada :
+	$(GPP) $(SRC)/CArmada.cpp -o $(BIN)/CArmada.o -c
+
+compilTestCArmada :
+	$(GPP) $(SRC)/testCGui.cpp $(BIN)/testCGui.o $(BIN)/CBateau.o $(BIN)/CArmada.o -o $(BIN)/testCGui.bin
+
+# ---
+
+testCGui : deleteAll compilCBateau compilCArmada compilCGui compilTestCGui
+
+compilCGui :
+	$(GPP) $(SRC)/CGui.cpp -o $(BIN)/CGui.o -c
+
+compilTestCGui :
+	$(GPP) $(SRC)/testCGui.cpp $(BIN)/CArmada.o $(BIN)/CBateau.o -o $(BIN)/testCGui.bin
+
+# ---
+
+compilCCoups :
+	$(GPP) $(SRC)/CCoups.cpp -o $(BIN)/CCoups.o -c
+
+compilCSocket :
+	$(GPP) $(SRC)/CSocket.cpp -o $(BIN)/CSocket.o -c
+
+compilCClientSocket :
+	$(GPP) $(SRC)/CClientSocket.cpp -o $(BIN)/CClientSocket.o -c
+
+compilCServerSocket :
+	$(GPP) $(SRC)/CServerSocket.cpp -o $(BIN)/CServerSocket.o -c
+
+compilCJoueur :
+	$(GPP) $(SRC)/CJoueur.cpp -o $(BIN)/CJoueur.o -c
+
+compilCJoueurCli :
+	$(GPP) $(SRC)/CJoueurCli.cpp -o $(BIN)/CJoueurCli.o -c
+
+compilCJoueurServ :
+	$(GPP) $(SRC)/CJoueurServ.cpp -o $(BIN)/CJoueurServ.o -c
+
 
 # ICI, la cible de compilation finale pour obtenir main.bin
 # A executer A LA FIN du projet en s'assurant que toutes les classes du projet compilent et s'exécutent sans erreurs !
