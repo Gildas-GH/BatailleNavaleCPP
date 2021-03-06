@@ -18,6 +18,7 @@ public:
     int getEffectifTotal();             // Renvoie le nombre total de bateaux de l'armada
     int getNbreTotCases();              // Accesseur : renvoie le nombre total de cases occupées par l'armada
     int getEffectif();                  // Renvoie le nombre de bateaux qui ne sont pas encore coulés (flottille encore en vie sur l'eau)
+    friend ostream &operator<<(ostream &os, CBateau &theB); // Surcharge de l'opérateur << pour afficher à l'écran les caractéristiques du bateau
 };
 
 #endif

@@ -1,22 +1,47 @@
 #include "CArmada.h"
 
+/**
+ * Ajoute un bateau dans m_listeBateaux avec la méthode push_back
+ */
 void CArmada::ajouterBateau(CBateau &unBat)
 {
+    if (&this->m_listeBateaux == NULL)
+        throw range_error("L'armada est NULL.");
+
     this->m_listeBateaux.push_back(unBat);
 }
 
+/**
+ * Accesseur : renvoie (par pointeur) le bateau à l'index i 
+ * (0 <= i < taille)
+ */
 CBateau *CArmada::getBateau(int i)
 {
+    if (i < 0 || i >= (int)this->m_listeBateaux.size())
+        throw invalid_argument("Index invalide.");
+
     return &(this->m_listeBateaux.at(i));
 }
 
+/**
+ * Renvoie le nombre total de bateaux de l'armada
+ */
 int CArmada::getEffectifTotal()
 {
+    if (&this->m_listeBateaux == NULL)
+        throw range_error("L'armada est NULL.");
+
     return this->m_listeBateaux.size();
 }
 
+/**
+ * Accesseur : renvoie le nombre total de cases occupées par l'armada
+ */
 int CArmada::getNbreTotCases()
 {
+    if (&this->m_listeBateaux == NULL)
+        throw range_error("L'armada est NULL.");
+    
     int value = 0;
     for (CBateau b : this->m_listeBateaux)
     {
@@ -25,8 +50,14 @@ int CArmada::getNbreTotCases()
     return value;
 }
 
+/**
+ * Renvoie le nombre de bateaux qui ne sont pas encore coulés
+ */
 int CArmada::getEffectif()
 {
+    if (&this->m_listeBateaux == NULL)
+        throw range_error("L'armada est NULL.");
+    
     int ret = 0;
 
     for (CBateau b : this->m_listeBateaux)
@@ -39,21 +70,20 @@ int CArmada::getEffectif()
     return ret;
 }
 
+/**
+ * Lecture du fichier flotille.txt (contient la liste de tous les bateaux)
+ */
 void CArmada::getArmadaFromFile()
 {
-    char nomFich[20] = "flotilles.txt";
+    char nomFich[20] = "flotille.txt";
     ifstream input;
     string line;
     string delimiter = " ";
 
-    try
-    {
+    try {
         input.open(nomFich, ios::in);
-    }
-    catch(...)
-    {
-        cout << "Le fichier n'existe pas" << endl;
-        exit(3);
+    } catch(...) {
+        throw invalid_argument("Le fichier n'existe pas.");
     }
 
     // Récupération des bateaux 1 par 1
@@ -71,17 +101,20 @@ void CArmada::getArmadaFromFile()
         {
             getline(input, line, '\n');
 
-            while ((pos = line.find(delimiter)) != std::string::npos)
-            {
-                token = line.substr(0, pos);
-                line.erase(0, pos + delimiter.length());
+            if (line.at(0) != '#') {
 
-                if (word == 0)
-                    shipName = token;
-                else if (word == 1)
-                    numberOfShips = stoi(token);
+                while ((pos = line.find(delimiter)) != std::string::npos)
+                {
+                    token = line.substr(0, pos);
+                    line.erase(0, pos + delimiter.length());
 
-                word++;
+                    if (word == 0)
+                        shipName = token;
+                    else if (word == 1)
+                        numberOfShips = stoi(token);
+
+                    word++;
+                }
             }
             shipSize = stoi(line);
 
@@ -93,11 +126,8 @@ void CArmada::getArmadaFromFile()
 
                 ajouterBateau(*(new CBateau(shipName, pos, shipSize)));
             }
-        }
-        catch (...)
-        {
-            cout << "Le fichier flotille.txt ne respecte pas le bon format" << endl;
-            exit(3);
+        } catch (...) {
+            invalid_argument("Le formattage est invalide.");
         }
     }
 
@@ -106,8 +136,14 @@ void CArmada::getArmadaFromFile()
     cout << "Armada chargee" << endl;
 }
 
+/**
+ * Placement automatique aléatoire des bateaux. faux si le positionnement a échoué.
+ */
 bool CArmada::placerAleatoirement()
 {
+    if (&this->m_listeBateaux == NULL)
+        throw range_error("L'armada est NULL.");
+
     int nbBateaux = this->m_listeBateaux.size();
     bool correct = true;
     int i = 0;
@@ -152,4 +188,16 @@ bool CArmada::placerAleatoirement()
     }
 
     return correct;
+}
+
+/**
+ * Affiche à l'écran toutes les positions des sous-marins
+ */
+ostream& operator<< (ostream& os, CArmada& theA) {
+	cout << "Armada : " << endl;
+    cout << "- Effectif : " << theA.getEffectif() << endl;
+    cout << "- Effectif Total : " << theA.getEffectifTotal() << endl;
+    cout << "- Nombre de cases : " << theA.getNbreTotCases() << endl;
+	
+	return cout;
 }

@@ -47,7 +47,7 @@ compilCArmada :
 	$(GPP) $(SRC)/CArmada.cpp -o $(BIN)/CArmada.o -c
 
 compilTestCArmada :
-	$(GPP) $(SRC)/testCGui.cpp $(BIN)/testCGui.o $(BIN)/CBateau.o $(BIN)/CArmada.o -o $(BIN)/testCGui.bin
+	$(GPP) $(SRC)/testCArmada.cpp $(BIN)/CBateau.o $(BIN)/CArmada.o -o $(BIN)/testCArmada.bin
 
 # ---
 
@@ -57,7 +57,7 @@ compilCGui :
 	$(GPP) $(SRC)/CGui.cpp -o $(BIN)/CGui.o -c
 
 compilTestCGui :
-	$(GPP) $(SRC)/testCGui.cpp $(BIN)/CArmada.o $(BIN)/CBateau.o -o $(BIN)/testCGui.bin
+	$(GPP) $(SRC)/testCGui.cpp $(BIN)/testCGui.o $(BIN)/CArmada.o $(BIN)/CBateau.o -o $(BIN)/testCGui.bin
 
 # ---
 
