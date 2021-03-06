@@ -12,11 +12,11 @@ void testEqualOperator();
 int main() {
     testConstructeurVide();
     testConstructeur();
+    testCopyConstructor();
     testTirAdverse();
     testEstCoule();
     testSetPosition();
     testGetDegats();
-    testCopyConstructor();
     testEqualOperator();
 
     return 0;
@@ -98,7 +98,7 @@ void testTirAdverse() {
     //cout << b9 << endl;
 
     cout << "Tir (qui touche) : " << b9.tirAdverse(make_pair(2,3)) << endl;
-    cout << "Tir (qui ne touche pas) : " << b9.tirAdverse(make_pair(3,3)) << endl;
+    cout << "Tir (qui ne touche pas) : " << b9.tirAdverse(make_pair(4,4)) << endl;
 
     cout << "= Tir invalide" << endl;
     try {
@@ -131,7 +131,7 @@ void testEstCoule() {
     cout << "= Sans tir dessus -> ne doit pas être coulé : " << b11.estCoule() << endl;
 
     b11.tirAdverse(make_pair(2, 3));
-    cout << "= On coule le bateau : estCoulé() :" << b11.estCoule() << endl;
+    cout << "= On coule le bateau : estCoulé() : " << b11.estCoule() << endl;
 
 }
 
@@ -149,7 +149,6 @@ void testSetPosition() {
     cout << "= Set positions -1, 3 (invalide)" << endl;
     CBateau b13;
     cout << b13 << endl;
-    cout << "= Set position à -1, 3." << endl;
     try {
         b13.setPosition(-1, 3);
     } catch (invalid_argument &error) {
@@ -158,21 +157,25 @@ void testSetPosition() {
     cout << b13 << endl;
 
 
-    cout << "= Sur un bateau rempli" << endl;
+    cout << "= Sur un bateau rempli (1,1) vers (5,3)" << endl;
     CBateau b14("Name", make_pair(1, 1), 2);
     cout << b14 << endl;
     b14.setPosition(5, 3);
     cout << b14 << endl;
 
-    cout << "= Set position à -1, 3." << endl;
+    cout << "= Set position à -1, 3 (invalide)." << endl;
     try {
         b13.setPosition(-1, 3);
     } catch (invalid_argument &error) {
         cout << "Error : " << error.what() << endl;
     }
-    cout << b13 << endl;
 
-    // TODO : Sur le bord de la grille
+    cout << "= Set position au bord de la grille (10, 10)." << endl;
+    try {
+        b13.setPosition(10, 10);
+    } catch (invalid_argument &error) {
+        cout << "Error : " << error.what() << endl;
+    }
 
 }
 
@@ -182,12 +185,10 @@ void testGetDegats() {
 
     CBateau b14;
     try {
-        cout << "Get degats (erreur) : " << endl;
-        cout << b14.getDegats(0) << endl;
+        b14.getDegats(0);
     } catch (range_error &error) {
         cout << "Erreur : " << error.what() << endl;
     }
-
 
     cout << "= Sur un bateau rempli" << endl;
 
@@ -211,16 +212,16 @@ void testEqualOperator() {
     cout << "= Sur un bateau vide" << endl;
 
     CBateau b16;
-    cout << b16;
+    cout << b16 << endl;;
     cout << "Copie du bateau :" << endl;
     CBateau b17 = b16;
-    cout << b17;
+    cout << b17 << endl;;
 
     cout << "= Sur un bateau rempli" << endl;
 
     CBateau b18("Nom", make_pair(1, 2), 3);
-    cout << b18;
+    cout << b18 << endl;;
     cout << "Copie du bateau :" << endl;
     CBateau b19 = b18;
-    cout << b19;
+    cout << b19 << endl;;
 }
