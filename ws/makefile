@@ -51,13 +51,13 @@ compilTestCArmada :
 
 # ---
 
-testCGui : deleteAll compilCBateau compilCArmada compilCGui compilTestCGui
+testCGui : deleteAll compilCBateau compilCArmada compilCCoups compilCGui compilTestCGui
 
 compilCGui :
 	$(GPP) $(SRC)/CGui.cpp -o $(BIN)/CGui.o -c
 
 compilTestCGui :
-	$(GPP) $(SRC)/testCGui.cpp $(BIN)/testCGui.o $(BIN)/CArmada.o $(BIN)/CBateau.o -o $(BIN)/testCGui.bin
+	$(GPP) $(SRC)/testCGui.cpp $(BIN)/CGui.o $(BIN)/CCoups.o $(BIN)/CArmada.o $(BIN)/CBateau.o -o $(BIN)/testCGui.bin
 
 # ---
 
