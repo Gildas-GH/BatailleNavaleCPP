@@ -26,6 +26,7 @@ public:
     void remplirDeuxGrilles(ostream &os);                  // Remplie les 2 grilles du joueur
     friend ostream &operator<<(ostream &os, CGui &theG);   // Surcharge de l'opérateur << pour l'affichage des grilles. Cette fonction fait un simple appel à remplirDeuxGrilles(...) de l'objet theG.
     void afficherLaGrille(ostream &os, string jouOuAdv);   // Affichage d'une grille (joueur ou adversaire) à l'écran, c'est-à-dire affichage du contenu de m_grilleJou ou m_grilleAdv + les légendes (0...TAILLE_GRILLE-2).
+    void status();
 };
 
 #endif

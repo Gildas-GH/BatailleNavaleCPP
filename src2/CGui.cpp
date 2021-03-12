@@ -15,16 +15,10 @@ CGui::CGui(CArmada *pArmada, CCoups *pCoups)
 CGui::~CGui()
 {
     if (this->m_pArmada != NULL)
-        delete &this->m_pArmada;
+        delete this->m_pArmada;
 
     if (this->m_pCoups != NULL)
-        delete &this->m_pCoups;
-
-    /*if (this->m_grilleAdv != NULL)
-        delete[] this->m_grilleAdv;
-
-    if (this->m_grilleJou != NULL)
-        delete[] this->m_grilleJou;*/
+        delete this->m_pCoups;
 }
 
 void CGui::setArmadaCoups(CArmada *pArmada, CCoups *pCoups)
@@ -105,20 +99,24 @@ void CGui::affichePerdu()
     cout << "La partie est perdue à l'écran" << endl;
 }
 
+void CGui::status()
+{
+    if (this->m_grilleJou == NULL) cout << "m_grilleJou : NULL" << endl;
+    else cout << "m_grilleJou : INIT" << endl;
+
+    if (this->m_grilleAdv == NULL) cout << "m_grilleAdv : NULL" << endl;
+    else cout << "m_grilleAdv : INIT" << endl;
+
+    if (this->m_pArmada == NULL) cout << "m_pArmada : NULL" << endl;
+    else cout << "m_pArmada : INIT" << endl;
+
+    if (this->m_pCoups == NULL) cout << "m_pCoups : NULL" << endl;
+    else cout << "m_pCoups : INIT" << endl;
+}
+
 ostream &operator<<(ostream &os, CGui &theG)
 {
-    if (theG.m_grilleJou == NULL) os << "m_grilleJou : NULL" << endl;
-    else os << "m_grilleJou : INIT" << endl;
-
-    if (theG.m_grilleAdv == NULL) os << "m_grilleAdv : NULL" << endl;
-    else os << "m_grilleAdv : INIT" << endl;
-
-    if (theG.m_pArmada == NULL) os << "m_pArmada : NULL" << endl;
-    else os << "m_pArmada : INIT" << endl;
-
-    if (theG.m_pCoups == NULL) os << "m_pCoups : NULL" << endl;
-    else os << "m_pCoups : INIT" << endl;
-
+    theG.remplirDeuxGrilles(os);
     return os;
 }
 
@@ -177,6 +175,9 @@ void CGui::afficherLaGrille(ostream &os, string jouOuAdv)
 {
     if (&this->m_grilleJou == NULL || &this->m_grilleAdv == NULL)
         throw range_error("Les grilles n'ont pas été initialisées.");
+
+    if (this->m_pArmada == NULL || this->m_pCoups == NULL)
+        throw range_error("L'armada n'a pas été initialisée.");
 
     os << "\t";
     for (size_t i = 0; i < TAILLE_GRILLE - 1; i++)

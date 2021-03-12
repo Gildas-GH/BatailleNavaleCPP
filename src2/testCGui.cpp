@@ -29,7 +29,7 @@ void testConstructeurVide() {
     cout << "=== Test du constructeur vide ===" << endl;
 
     CGui c1;
-    cout << c1 << endl;
+    c1.status();
 }
 
 void testAfficheGagne() {
@@ -47,7 +47,13 @@ void testAffichePerdu() {
 }
 
 void testConstructeurNormal() {
-    
+    cout << "=== Test du constructeur normal ===" << endl;
+
+    CCoups* coupTestScenario = new CCoups();
+    CArmada* armadaTestScenario  = new CArmada();
+    CGui* gui = new CGui(armadaTestScenario, coupTestScenario);
+
+    gui->status();
 }
 
 void testSetArmadaCoups() {
@@ -55,14 +61,12 @@ void testSetArmadaCoups() {
     cout << "= Sur un objet vide" << endl;
     
     CGui c1;
-    CArmada armada;
-    CCoups coups;   
+    CCoups* coupTestScenario = new CCoups();
+    CArmada* armadaTestScenario  = new CArmada(); 
     
-    c1.setArmadaCoups(&armada, &coups);
+    c1.setArmadaCoups(armadaTestScenario, coupTestScenario);
 
-    cout << c1 << endl;
-
-    delete& c1;
+    c1.status();
 }
 
 void testPositionnerBateaux() {
@@ -70,8 +74,18 @@ void testPositionnerBateaux() {
     cout << "= Sur un objet vide" << endl;
 
     CGui c1;
-    c1.positionnerBateaux();
+    try {
+        c1.positionnerBateaux();
+    } catch(range_error &e) {
+        cout << e.what() << endl;
+    }
 
+    cout << "= Sur un objet rempli" << endl;
+    CCoups* coupTestScenario = new CCoups();
+    CArmada* armadaTestScenario  = new CArmada();
+    CGui* gui = new CGui(armadaTestScenario, coupTestScenario);
+
+    gui->positionnerBateaux();
 }
 
 void testChoisirAttaque() {
@@ -81,7 +95,15 @@ void testChoisirAttaque() {
     CGui c1;
     pair<int,int> p = c1.choisirAttaque();
 
-    cout << p.first << p.second << endl;
+    cout << "(" << p.first  << "," << p.second << ")" << endl;
+
+    cout << "= Sur un objet rempli" << endl;
+    CCoups* coupTestScenario = new CCoups();
+    CArmada* armadaTestScenario  = new CArmada();
+    CGui* gui = new CGui(armadaTestScenario, coupTestScenario);
+
+    pair<int,int> p2 = gui->choisirAttaque();
+    cout << "(" << p2.first  << "," << p2.second << ")" << endl;
 
 }
 
@@ -90,7 +112,18 @@ void testRemplirDeuxGrilles() {
     cout << "= Sur un objet vide" << endl;
 
     CGui c1;
-    c1.remplirDeuxGrilles(cout);
+    try {
+        c1.remplirDeuxGrilles(cout);
+    } catch(range_error &e) {
+        cout << e.what() << endl;
+    }
+
+    cout << "= Sur un objet rempli" << endl;
+    CCoups* coupTestScenario = new CCoups();
+    CArmada* armadaTestScenario  = new CArmada();
+    CGui* gui = new CGui(armadaTestScenario, coupTestScenario);
+
+    gui->remplirDeuxGrilles(cout);
 
 }
 
@@ -99,9 +132,30 @@ void testAfficherLaGrille() {
     cout << "= Sur un objet vide (joueur)" << endl;
 
     CGui c1;
-    c1.afficherLaGrille(cout, "joueur");
+    try {
+        c1.afficherLaGrille(cout, "joueur");
+    } catch(range_error &e) {
+        cout << e.what() << endl;
+    }
     
     cout << "= Sur un objet vide (adversaire)" << endl;
-    c1.afficherLaGrille(cout, "adversaire");
+    try {
+        c1.afficherLaGrille(cout, "adversaire");
+    } catch(range_error &e) {
+        cout << e.what() << endl;
+    }
+
+    cout << "= Sur un objet rempli (joueur)" << endl;
+    CCoups* coupTestScenario = new CCoups();
+    CArmada* armadaTestScenario  = new CArmada();
+    CGui* gui = new CGui(armadaTestScenario, coupTestScenario);
+
+    gui->afficherLaGrille(cout, "joueur");
+
+    cout << "= Sur un objet rempli (adversaire)" << endl;
+    gui->afficherLaGrille(cout, "adversaire");
+
+    cout << "= Après avoir rempli les grilles" << endl;
+    gui->remplirDeuxGrilles(cout);
 
 }
