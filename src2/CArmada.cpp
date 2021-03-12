@@ -2,6 +2,7 @@
 
 /**
  * Ajoute un bateau dans m_listeBateaux avec la méthode push_back
+ * @param unBat le bateau
  */
 void CArmada::ajouterBateau(CBateau &unBat)
 {
@@ -14,6 +15,8 @@ void CArmada::ajouterBateau(CBateau &unBat)
 /**
  * Accesseur : renvoie (par pointeur) le bateau à l'index i 
  * (0 <= i < taille)
+ * @param i l'index du bateau
+ * @returns le bateau
  */
 CBateau *CArmada::getBateau(int i)
 {
@@ -25,6 +28,7 @@ CBateau *CArmada::getBateau(int i)
 
 /**
  * Renvoie le nombre total de bateaux de l'armada
+ * @returns le nombre total de bateaux
  */
 int CArmada::getEffectifTotal()
 {
@@ -36,6 +40,7 @@ int CArmada::getEffectifTotal()
 
 /**
  * Accesseur : renvoie le nombre total de cases occupées par l'armada
+ * @returns nombre de cases occupées
  */
 int CArmada::getNbreTotCases()
 {
@@ -52,6 +57,7 @@ int CArmada::getNbreTotCases()
 
 /**
  * Renvoie le nombre de bateaux qui ne sont pas encore coulés
+ * @returns nombre de bateaux pas coulés
  */
 int CArmada::getEffectif()
 {
@@ -137,7 +143,8 @@ void CArmada::getArmadaFromFile()
 }
 
 /**
- * Placement automatique aléatoire des bateaux. faux si le positionnement a échoué.
+ * Placement automatique aléatoire des bateaux. 
+ * @returns faux si le positionnement a échoué.
  */
 bool CArmada::placerAleatoirement()
 {
@@ -192,12 +199,15 @@ bool CArmada::placerAleatoirement()
 
 /**
  * Affiche à l'écran toutes les positions des sous-marins
+ * @param os flux de sortie
+ * @param theA l'armada à afficher
+ * @returns flux de sortie avec l'armada
  */
 ostream& operator<< (ostream& os, CArmada& theA) {
-	cout << "Armada : " << endl;
-    cout << "- Effectif : " << theA.getEffectif() << endl;
-    cout << "- Effectif Total : " << theA.getEffectifTotal() << endl;
-    cout << "- Nombre de cases : " << theA.getNbreTotCases() << endl;
+	os << "Armada : " << endl;
+    os << "- Effectif : " << theA.getEffectif() << endl;
+    os << "- Effectif Total : " << theA.getEffectifTotal() << endl;
+    os << "- Nombre de cases : " << theA.getNbreTotCases() << endl;
 	
-	return cout;
+	return os;
 }

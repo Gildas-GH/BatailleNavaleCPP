@@ -14,6 +14,9 @@ CBateau::CBateau()
 
 /**
  * Le bateau n'a encore aucune case touchée (m_pDegats à faux partout)
+ * @param n le nom du bateau
+ * @param p point d'ancrage du bateau
+ * @param t taille du bateau
  */
 CBateau::CBateau(string n, pair<int, int> p, int t)
 {
@@ -44,6 +47,7 @@ CBateau::CBateau(string n, pair<int, int> p, int t)
 
 /**
  * Copie-constructeur
+ * @param b le bateau à copier
  */
 CBateau::CBateau(const CBateau &b)
 {
@@ -72,6 +76,8 @@ CBateau::~CBateau()
 
 /**
  * Renvoie vrai si la case i du bateau est touchée (0 <= i < m_taille)
+ * @param i case recherchée
+ * @returns vrai si la case est touchée
  */
 bool CBateau::getDegats(int i)
 {
@@ -86,6 +92,7 @@ bool CBateau::getDegats(int i)
 
 /**
  * Accesseur : renvoie le nom
+ * @returns nom du bateau
  */
 string CBateau::getNom()
 {
@@ -94,6 +101,7 @@ string CBateau::getNom()
 
 /**
  * Accesseur : renvoie le point d'ancrage
+ * @returns point d'ancrage du bateau
  */
 pair<int, int> CBateau::getPosition()
 {
@@ -102,6 +110,7 @@ pair<int, int> CBateau::getPosition()
 
 /**
  * Accesseur : renvoie la taille
+ * @returns taille du bateau
  */
 int CBateau::getTaille()
 {
@@ -111,6 +120,8 @@ int CBateau::getTaille()
 /**
  * Modifie la position du bateau sur la grille en
  * ième ligne, jème colonne (nouveau point d'ancrage)
+ * @param x X position
+ * @param y Y position
  */
 void CBateau::setPosition(int x, int y)
 {
@@ -128,6 +139,7 @@ void CBateau::setPosition(int x, int y)
 
 /**
  * Renvoie vrai si le bateau est coulé
+ * @returns true if ship is sunk
  */
 bool CBateau::estCoule()
 {
@@ -150,6 +162,9 @@ bool CBateau::estCoule()
  * est victorieux il doit être marqué dans le tableau m_pDegats.
  * ATTENTION si une case est déjà touchée il ne faut PAS renvoyer vrai
  * (donc renvoyer faux) sinon un tir victorieux est comptabilisé en trop
+ * 
+ * @returns true ssi case touchée pour la 1e fois
+ * @param p les coordonnées
  */
 bool CBateau::tirAdverse(pair<int, int> p)
 {
@@ -188,6 +203,9 @@ bool CBateau::tirAdverse(pair<int, int> p)
 /**
  * Surcharge de l'opérateur << pour afficher à l'écran
  * les caractéristiques du bateau
+ * @param os flux de sortie
+ * @param theB le bateau à afficher
+ * @returns flux de sortie avec le bateau
  */
 ostream &operator<<(ostream &os, CBateau &theB)
 {
@@ -200,6 +218,8 @@ ostream &operator<<(ostream &os, CBateau &theB)
 
 /**
  * Surcharge de l'opérateur égal
+ * @returns le nouveau bateau
+ * @param b le bateau à copier
  */
 CBateau &CBateau::operator=(const CBateau &b)
 {
